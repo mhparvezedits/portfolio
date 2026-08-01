@@ -509,3 +509,56 @@ ANIMATIONS & RESPONSIVE
     .image-box{ width:250px; height:250px; }
     .cta{ padding:50px 25px; }
 }
+
+
+/* MOBILE VIEW */
+@media(max-width:768px){
+    .navbar{ flex-direction:column; gap:20px; padding:18px; }
+    .nav-links{ gap:18px; flex-wrap:wrap; justify-content:center; }
+    .hero{ padding-top:180px; }
+    .hero h1{ font-size:38px; }
+    h2{ font-size:34px; }
+    .image-box{ width:300px; height:300px; }
+    
+    /* Change grid to exactly 1 video per row on mobile */
+    .portfolio-grid, .services-grid{ grid-template-columns:1fr; }
+    
+    /* --- NEW: Reduce massive vertical gaps on tablets & large phones --- */
+    section { padding: 60px 5%; }
+    footer { margin-top: 50px; }
+    .cta { margin: 60px 20px; } /* Adds the left/right gap to the CTA box */
+    
+    .filter-buttons {
+        flex-wrap: nowrap; 
+        justify-content: flex-start; 
+        overflow-x: auto; 
+        -webkit-overflow-scrolling: touch; 
+        padding-bottom: 15px; 
+        -ms-overflow-style: none;  
+        scrollbar-width: none;  
+    }
+    .filter-buttons::-webkit-scrollbar {
+        display: none; 
+    }
+    .filter-buttons button {
+        flex-shrink: 0; 
+        white-space: nowrap; 
+    }
+}
+
+/* SMALL MOBILE VIEW */
+@media(max-width:480px){
+    .hero h1{ font-size:30px; }
+    .hero p{ font-size:16px; }
+    .tag{ font-size:13px; }
+    .btn-primary, .btn-secondary{ width:100%; }
+    .image-box{ width:250px; height:250px; }
+    
+    /* --- NEW: Tighten gaps further for small mobile screens --- */
+    section { padding: 40px 5%; }
+    footer { margin-top: 30px; }
+    .cta { 
+        padding: 40px 20px; 
+        margin: 40px 15px; /* Safely pads the CTA box from the phone edges */
+    } 
+}
