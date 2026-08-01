@@ -512,6 +512,7 @@ ANIMATIONS & RESPONSIVE
 
 
 /* MOBILE VIEW */
+/* MOBILE VIEW */
 @media(max-width:768px){
     .navbar{ flex-direction:column; gap:20px; padding:18px; }
     .nav-links{ gap:18px; flex-wrap:wrap; justify-content:center; }
@@ -520,13 +521,16 @@ ANIMATIONS & RESPONSIVE
     h2{ font-size:34px; }
     .image-box{ width:300px; height:300px; }
     
-    /* Change grid to exactly 1 video per row on mobile */
     .portfolio-grid, .services-grid{ grid-template-columns:1fr; }
     
-    /* --- NEW: Reduce massive vertical gaps on tablets & large phones --- */
     section { padding: 60px 5%; }
     footer { margin-top: 50px; }
-    .cta { margin: 60px 20px; } /* Adds the left/right gap to the CTA box */
+    
+    /* --- FIX: Center the CTA box perfectly --- */
+    .cta { 
+        width: 90%; 
+        margin: 60px auto; 
+    } 
     
     .filter-buttons {
         flex-wrap: nowrap; 
@@ -554,11 +558,13 @@ ANIMATIONS & RESPONSIVE
     .btn-primary, .btn-secondary{ width:100%; }
     .image-box{ width:250px; height:250px; }
     
-    /* --- NEW: Tighten gaps further for small mobile screens --- */
     section { padding: 40px 5%; }
     footer { margin-top: 30px; }
+    
+    /* --- FIX: Center the CTA box perfectly for small screens --- */
     .cta { 
+        width: 90%;
         padding: 40px 20px; 
-        margin: 40px 15px; /* Safely pads the CTA box from the phone edges */
+        margin: 40px auto; 
     } 
 }
