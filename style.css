@@ -351,19 +351,20 @@ CARD & IFRAME CONTAINER (Fixed height for Cloudinary iframes)
     box-shadow:0 25px 70px rgba(37,99,235,.22);
 }
 .video-container {
-    position: relative;
+   position: relative;
     width: 100%;
-    height: 450px; 
-    background: #111827;
+    aspect-ratio: 9 / 16; /* Forces a consistent vertical card shape */
+    background: #000;
     overflow: hidden;
 }
 .video-container iframe {
-    position: absolute;
+   position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     border: none;
+    object-fit: cover;
 }
 
 /*=========================================
