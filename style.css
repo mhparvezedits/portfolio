@@ -69,7 +69,7 @@ body::after{
 }
 
 /* ==========================
-NAVBAR
+NAVBAR & SHRINKING LOGIC
 ========================== */
 .navbar{
     position:fixed;
@@ -87,11 +87,29 @@ NAVBAR
     border:1px solid rgba(255,255,255,.08);
     border-radius:18px;
     z-index:999;
+    transition: all 0.3s ease-in-out;
+}
+.navbar.shrink {
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+    background: rgba(15, 23, 42, 0.98); 
+    justify-content: center;
 }
 .logo{
     font-size:28px;
     font-weight:800;
     letter-spacing:1px;
+    transition: all 0.3s ease-in-out;
+    max-width: 250px; 
+    opacity: 1;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.navbar.shrink .logo {
+    max-width: 0;
+    opacity: 0;
+    margin: 0; 
+    padding: 0;
 }
 .logo span{
     color:#3b82f6;
@@ -311,14 +329,13 @@ PORTFOLIO GRID
 =========================================*/
 .portfolio-grid {
     display: grid;
-    /* This forces exactly 4 equal columns on desktop */
     grid-template-columns: repeat(4, 1fr); 
-    gap: 20px; /* Space between the videos */
+    gap: 20px; 
     align-items: start;
     width: 100%;
 }
 /*=========================================
-CARD & VIDEO IFRAME (550px Exact Height)
+CARD & HTML5 VIDEO PLAYER
 =========================================*/
 .portfolio-card{
     width: 100%;
@@ -336,16 +353,15 @@ CARD & VIDEO IFRAME (550px Exact Height)
 .video-container {
     position: relative;
     width: 100%;
-    aspect-ratio: 9 / 16; /* This is the magic line that fixes the black bars */
+    aspect-ratio: 9 / 16; 
     background: #111827;
+    overflow: hidden;
 }
-.video-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
+.video-container video {
     width: 100%;
     height: 100%;
-    border: none;
+    object-fit: cover;
+    display: block;
 }
 
 /*=========================================
@@ -465,53 +481,9 @@ ANIMATIONS & RESPONSIVE
     .hero-buttons{ justify-content:center; }
     .image-box{ width:360px; height:360px; }
     .navbar{ width:94%; }
-    
-    /* Change grid to 2 videos per row on tablets */
     .portfolio-grid { grid-template-columns: repeat(2, 1fr); } 
 }
 
-/* MOBILE VIEW */
-@media(max-width:768px){
-    .navbar{ flex-direction:column; gap:20px; padding:18px; }
-    .nav-links{ gap:18px; flex-wrap:wrap; justify-content:center; }
-    .hero{ padding-top:180px; }
-    .hero h1{ font-size:38px; }
-    h2{ font-size:34px; }
-    .image-box{ width:300px; height:300px; }
-    
-    /* Change grid to exactly 1 video per row on mobile */
-    .portfolio-grid, .services-grid{ grid-template-columns:1fr; }
-    
-    .filter-buttons {
-        flex-wrap: nowrap; 
-        justify-content: flex-start; 
-        overflow-x: auto; 
-        -webkit-overflow-scrolling: touch; 
-        padding-bottom: 15px; 
-        -ms-overflow-style: none;  
-        scrollbar-width: none;  
-    }
-    .filter-buttons::-webkit-scrollbar {
-        display: none; 
-    }
-    .filter-buttons button {
-        flex-shrink: 0; 
-        white-space: nowrap; 
-    }
-}
-
-/* SMALL MOBILE VIEW */
-@media(max-width:480px){
-    .hero h1{ font-size:30px; }
-    .hero p{ font-size:16px; }
-    .tag{ font-size:13px; }
-    .btn-primary, .btn-secondary{ width:100%; }
-    .image-box{ width:250px; height:250px; }
-    .cta{ padding:50px 25px; }
-}
-
-
-/* MOBILE VIEW */
 /* MOBILE VIEW */
 @media(max-width:768px){
     .navbar{ flex-direction:column; gap:20px; padding:18px; }
@@ -526,7 +498,6 @@ ANIMATIONS & RESPONSIVE
     section { padding: 60px 5%; }
     footer { margin-top: 50px; }
     
-    /* --- FIX: Center the CTA box perfectly --- */
     .cta { 
         width: 90%; 
         margin: 60px auto; 
@@ -561,13 +532,13 @@ ANIMATIONS & RESPONSIVE
     section { padding: 40px 5%; }
     footer { margin-top: 30px; }
     
-    /* --- FIX: Center the CTA box perfectly for small screens --- */
     .cta { 
         width: 90%;
         padding: 40px 20px; 
         margin: 40px auto; 
     } 
 }
+
 .watermark {
     position: absolute;
     bottom: 65px; 
