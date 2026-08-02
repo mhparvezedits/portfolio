@@ -325,6 +325,9 @@ PORTFOLIO GRID & VIDEO PLAYER
     gap: 20px; 
     align-items: start;
     width: 100%;
+    /* The Sweet Spot: Not too wide (too tall), not too narrow (squished) */
+    max-width: 1024px; 
+    margin: 0 auto;    
 }
 .portfolio-card{
     width: 100%;
@@ -339,23 +342,11 @@ PORTFOLIO GRID & VIDEO PLAYER
     transform:translateY(-12px);
     box-shadow:0 25px 70px rgba(37,99,235,.22);
 }
+
 .video-container {
     position: relative;
     width: 100%;
-    aspect-ratio: 4 / 5; /* Keeps the card perfectly short on desktop */
-    background: #000;    /* Hides the edges so it looks seamless */
-    overflow: hidden;
-}
-
-.video-container video {
-    width: 100%;
-    height: 100%;
-    object-fit: contain; /* Forces the entire 9:16 video to stay fully in frame */
-    display: block;
-}
-/* .video-container {
-    position: relative;
-    width: 100%;
+    /* Back to exact video dimensions to eliminate black bars */
     aspect-ratio: 9 / 16; 
     background: #000;
     overflow: hidden;
@@ -363,11 +354,12 @@ PORTFOLIO GRID & VIDEO PLAYER
 .video-container video {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    /* Fills the 9:16 container perfectly from edge to edge */
+    object-fit: cover; 
     display: block;
-} */
+}
 
-/* Main site e Play Button style add kora hoyeche jeno venge na jay */
+/* Custom Play Button */
 .custom-play-btn {
     position: absolute;
     top: 50%;
@@ -406,6 +398,55 @@ PORTFOLIO GRID & VIDEO PLAYER
 .card-content h3{
     margin:12px 0;
     font-size:23px;
+}
+
+/* ==========================================
+   TESTIMONIALS SECTION
+========================================== */
+.testimonials {
+    text-align: center;
+}
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+.testi-card {
+    padding: 40px 30px;
+    text-align: left;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(20px);
+    transition: .35s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.testi-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 60px rgba(37, 99, 235, 0.22);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+.testi-card p {
+    color: #a8b3cf;
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 25px;
+    font-style: italic;
+}
+.testi-card h4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 5px;
+}
+.testi-card span {
+    font-size: 13px;
+    color: #60a5fa;
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
 
 /*=========================================
@@ -570,18 +611,4 @@ ANIMATIONS & RESPONSIVE
     z-index: 10;
     pointer-events: none; 
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4); 
-}
-/*=========================================
-PORTFOLIO GRID
-=========================================*/
-.portfolio-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); 
-    gap: 20px; 
-    align-items: start;
-    width: 100%;
-    
-    /* The Sweet Spot: Not too wide (too tall), not too narrow (squished) */
-    max-width: 1024px; 
-    margin: 0 auto;    
 }
