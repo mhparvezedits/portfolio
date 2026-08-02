@@ -563,9 +563,9 @@ ANIMATIONS & RESPONSIVE
     
     .portfolio-grid, .services-grid{ grid-template-columns:1fr; }
     
-    /* FIX: By maxing the width here, the card shrinks cleanly and naturally reduces height! */
+    /* --- NEW FIX: Shrunk from 360px to 280px to significantly reduce height! --- */
     .portfolio-card { 
-        max-width: 360px; 
+        max-width: 280px; 
         margin: 0 auto; 
     }
     
@@ -602,6 +602,12 @@ ANIMATIONS & RESPONSIVE
     .tag{ font-size:13px; }
     .btn-primary, .btn-secondary{ width:100%; }
     .image-box{ width:250px; height:250px; }
+    
+    /* --- NEW FIX: Shrinks even further on tiny phone screens --- */
+    .portfolio-card { 
+        max-width: 250px; 
+        margin: 0 auto; 
+    }
     
     section { padding: 40px 5%; }
     footer { margin-top: 30px; }
