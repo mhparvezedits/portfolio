@@ -325,9 +325,6 @@ PORTFOLIO GRID & VIDEO PLAYER
     gap: 20px; 
     align-items: start;
     width: 100%;
-   /* Reduced from 1100px to 850px to bring the height down */
-    max-width: 850px; 
-    margin: 0 auto;
 }
 .portfolio-card{
     width: 100%;
