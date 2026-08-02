@@ -286,7 +286,7 @@ SHOWREEL (16:9)
 }
 
 /*=========================================
-PORTFOLIO GRID & CUSTOM THUMBNAIL PLAYER
+PORTFOLIO GRID & VIDEO PLAYER
 =========================================*/
 .portfolio{
     text-align:center;
@@ -334,21 +334,48 @@ PORTFOLIO GRID & CUSTOM THUMBNAIL PLAYER
     box-shadow:0 25px 70px rgba(37,99,235,.22);
 }
 
-/* THIS IS THE FIX FOR THE BLACK BARS AND THUMBNAIL */
 .video-container {
     position: relative;
     width: 100%;
     aspect-ratio: 9 / 16; 
-    background: #111827;
+    background: #000;
     overflow: hidden;
 }
 .video-container video {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Stretches the video and poster cleanly to fill the box */
+    object-fit: cover;
     display: block;
 }
-/* ----------------------------------------------- */
+
+/* ==========================================
+   NEW CUSTOM PLAY BUTTON STYLING
+========================================== */
+.custom-play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 75px;
+    height: 75px;
+    cursor: pointer;
+    z-index: 20;
+    transition: all 0.3s ease;
+}
+.custom-play-btn:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+}
+.custom-play-btn svg {
+    width: 100%;
+    height: 100%;
+}
+.custom-play-btn svg circle {
+    transition: 0.3s;
+}
+.custom-play-btn:hover svg circle {
+    fill: rgba(37, 99, 235, 0.9); /* Lights up blue on hover */
+}
+/* ---------------------------------------- */
 
 .card-content{
     padding:24px;
