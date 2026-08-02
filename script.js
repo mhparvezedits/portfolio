@@ -79,6 +79,8 @@ function createCards(categoryFilter = "All") {
                         allowfullscreen
                         loading="lazy">
                     </iframe>
+                    <!-- THIS IS YOUR NEW WATERMARK -->
+                <div class="watermark">Parvez Edits</div>
                 </div>
                 <div class="card-content">
                     <div class="category">${video.category}</div>
