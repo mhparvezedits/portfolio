@@ -571,3 +571,51 @@ ANIMATIONS & RESPONSIVE
     pointer-events: none; 
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4); 
 }
+/*=========================================
+PORTFOLIO GRID
+=========================================*/
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 20px; 
+    align-items: start;
+    width: 100%;
+    
+    /* The Sweet Spot: Not too wide (too tall), not too narrow (squished) */
+    max-width: 1024px; 
+    margin: 0 auto;    
+}
+
+/*=========================================
+CARD & VIDEO CONTAINER 
+=========================================*/
+.portfolio-card{
+    width: 100%;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.06);
+    backdrop-filter:blur(20px);
+    border-radius:24px;
+    overflow:hidden;
+    transition:.35s;
+}
+.portfolio-card:hover{
+    transform:translateY(-12px);
+    box-shadow:0 25px 70px rgba(37,99,235,.22);
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    /* Back to exact video dimensions to eliminate black bars */
+    aspect-ratio: 9 / 16; 
+    background: #000;
+    overflow: hidden;
+}
+
+.video-container video {
+    width: 100%;
+    height: 100%;
+    /* Fills the 9:16 container perfectly from edge to edge */
+    object-fit: cover; 
+    display: block;
+}
