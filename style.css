@@ -343,7 +343,7 @@ PORTFOLIO GRID & VIDEO PLAYER
 .video-container {
     position: relative;
     width: 100%;
-    aspect-ratio: 4 / 5; 
+    aspect-ratio: 9 / 16; 
     background: #000;
     overflow: hidden;
 }
