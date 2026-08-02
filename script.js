@@ -2,31 +2,26 @@
    MH PARVEZ PORTFOLIO - GOOGLE SHEETS BACKEND
 ========================================== */
 
-// Your live Google Sheets TSV Link
 const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKtX4pSnCjRVBB4Dq25f2Zgp-MK-TaueGyqg-sQCLlV4k2iBJmmLmtf16mO111QokNeHHPJd_f_HKB/pub?gid=0&single=true&output=tsv';
 
 let portfolio = [];
 const grid = document.querySelector(".portfolio-grid");
 
-// Fetch data from Google Sheets
 async function loadFromGoogleSheets() {
     try {
         const response = await fetch(sheetUrl);
         const text = await response.text();
         
-        // Split text by rows and skip the header row
         const rows = text.split('\n').slice(1); 
         
         portfolio = rows.map(row => {
             const columns = row.split('\t');
             let embedUrl = columns[2] ? columns[2].trim() : '';
-            let thumbnailUrl = columns[3] ? columns[3].trim() : '';
             
             return {
                 title: columns[0] ? columns[0].trim() : '',
                 category: columns[1] ? columns[1].trim() : '',
-                embedUrl: embedUrl,
-                thumbnailUrl: thumbnailUrl
+                embedUrl: embedUrl
             };
         }).filter(video => video.title !== '' && video.embedUrl !== '');
         
@@ -37,7 +32,7 @@ async function loadFromGoogleSheets() {
 }
 
 /* ==========================================
-   RENDER CARDS (HTML5 Video & Custom Thumbnail)
+   RENDER CARDS (Using working iframes)
 ========================================== */
 function createCards(categoryFilter = "All") {
     if (!grid) return;
@@ -49,11 +44,14 @@ function createCards(categoryFilter = "All") {
             grid.innerHTML += `
             <div class="portfolio-card">
                 <div class="video-container">
-                    <video controls preload="metadata" playsinline poster="${video.thumbnailUrl}">
-                        <source src="${video.embedUrl}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                    <!-- THIS IS YOUR WATERMARK -->
+                    <iframe 
+                        src="${video.embedUrl}" 
+                        title="${video.title}" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen
+                        loading="lazy">
+                    </iframe>
                     <div class="watermark">Parvez Edits</div>
                 </div>
                 <div class="card-content">
@@ -79,7 +77,7 @@ buttons.forEach(button => {
 });
 
 /* ==========================================
-   SCROLL ANIMATION
+   SCROLL ANIMATION & NAVBAR SHRINK
 ========================================== */
 const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
@@ -92,6 +90,16 @@ const observer = new IntersectionObserver(entries => {
 document.querySelectorAll("section").forEach(section => {
     section.classList.add("fade-up");
     observer.observe(section);
+});
+
+// Shrinking Header Logic
+const navbar = document.querySelector('.navbar'); 
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+        navbar.classList.add('shrink');
+    } else {
+        navbar.classList.remove('shrink');
+    }
 });
 
 /* ==========================================
