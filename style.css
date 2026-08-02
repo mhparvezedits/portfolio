@@ -16,7 +16,6 @@ body{
     overflow-x:hidden;
     line-height:1.6;
 }
-/* Scrollbar */
 ::-webkit-scrollbar{
     width:10px;
 }
@@ -167,9 +166,6 @@ HERO
     margin-bottom:40px;
 }
 
-/* ==========================
-BUTTONS
-========================== */
 .hero-buttons{
     display:flex;
     gap:20px;
@@ -201,9 +197,6 @@ BUTTONS
     transform:translateY(-5px);
 }
 
-/* ==========================
-PROFILE IMAGE
-========================== */
 .hero-right{
     flex:1;
     display:flex;
@@ -249,9 +242,6 @@ PROFILE IMAGE
     100%{ transform:rotate(360deg); }
 }
 
-/* ==========================
-SECTION TITLES
-========================== */
 h2{
     font-size:42px;
     text-align:center;
@@ -268,7 +258,7 @@ h2{
 }
 
 /*=========================================
-SHOWREEL (16:9 Aspect Ratio)
+SHOWREEL (16:9)
 =========================================*/
 .showreel-box{
     width:100%;
@@ -296,7 +286,7 @@ SHOWREEL (16:9 Aspect Ratio)
 }
 
 /*=========================================
-PORTFOLIO
+PORTFOLIO GRID & CUSTOM THUMBNAIL PLAYER
 =========================================*/
 .portfolio{
     text-align:center;
@@ -323,10 +313,6 @@ PORTFOLIO
 .filter-buttons button:hover, .filter-buttons .active{
     background:#2563eb;
 }
-
-/*=========================================
-PORTFOLIO GRID
-=========================================*/
 .portfolio-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr); 
@@ -334,9 +320,6 @@ PORTFOLIO GRID
     align-items: start;
     width: 100%;
 }
-/*=========================================
-CARD & IFRAME CONTAINER (Fixed height for Cloudinary iframes)
-=========================================*/
 .portfolio-card{
     width: 100%;
     background:rgba(255,255,255,.04);
@@ -350,26 +333,23 @@ CARD & IFRAME CONTAINER (Fixed height for Cloudinary iframes)
     transform:translateY(-12px);
     box-shadow:0 25px 70px rgba(37,99,235,.22);
 }
+
+/* THIS IS THE FIX FOR THE BLACK BARS AND THUMBNAIL */
 .video-container {
-   position: relative;
+    position: relative;
     width: 100%;
-    aspect-ratio: 9 / 16; /* Forces a consistent vertical card shape */
-    background: #000;
+    aspect-ratio: 9 / 16; 
+    background: #111827;
     overflow: hidden;
 }
-.video-container iframe {
-   position: absolute;
-    top: 0;
-    left: 0;
+.video-container video {
     width: 100%;
     height: 100%;
-    border: none;
-    object-fit: cover;
+    object-fit: cover; /* Stretches the video and poster cleanly to fill the box */
+    display: block;
 }
+/* ----------------------------------------------- */
 
-/*=========================================
-CARD CONTENT
-=========================================*/
 .card-content{
     padding:24px;
 }
@@ -386,7 +366,7 @@ CARD CONTENT
 }
 
 /*=========================================
-SERVICES
+SERVICES & CTA
 =========================================*/
 .services-grid{
     display:grid;
@@ -415,9 +395,6 @@ SERVICES
     margin-bottom:10px;
 }
 
-/* ==========================================
-CTA SECTION
-========================================== */
 .cta{
     max-width:1200px;
     margin:100px auto;
@@ -438,9 +415,6 @@ CTA SECTION
     font-size:18px;
 }
 
-/* ==========================================
-CONTACT & FOOTER
-========================================== */
 .contact{
     text-align:center;
 }
@@ -476,7 +450,6 @@ ANIMATIONS & RESPONSIVE
     transform:translateY(0);
 }
 
-/* TABLET VIEW */
 @media(max-width:1100px){
     .hero{ flex-direction:column-reverse; text-align:center; }
     .hero h1{ font-size:48px; margin:auto; }
@@ -487,7 +460,6 @@ ANIMATIONS & RESPONSIVE
     .portfolio-grid { grid-template-columns: repeat(2, 1fr); } 
 }
 
-/* MOBILE VIEW */
 @media(max-width:768px){
     .navbar{ flex-direction:column; gap:20px; padding:18px; }
     .nav-links{ gap:18px; flex-wrap:wrap; justify-content:center; }
@@ -515,16 +487,10 @@ ANIMATIONS & RESPONSIVE
         -ms-overflow-style: none;  
         scrollbar-width: none;  
     }
-    .filter-buttons::-webkit-scrollbar {
-        display: none; 
-    }
-    .filter-buttons button {
-        flex-shrink: 0; 
-        white-space: nowrap; 
-    }
+    .filter-buttons::-webkit-scrollbar { display: none; }
+    .filter-buttons button { flex-shrink: 0; white-space: nowrap; }
 }
 
-/* SMALL MOBILE VIEW */
 @media(max-width:480px){
     .hero h1{ font-size:30px; }
     .hero p{ font-size:16px; }
