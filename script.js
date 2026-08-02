@@ -7,6 +7,26 @@ const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKtX4pSnCjRVB
 let portfolio = [];
 const grid = document.querySelector(".portfolio-grid");
 
+// SMART CONVERTER: Turns Cloudinary Web Links into Direct .MP4 files
+function formatVideoUrl(rawUrl) {
+    if (!rawUrl) return '';
+    
+    if (rawUrl.includes('player.cloudinary.com')) {
+        try {
+            const urlObj = new URL(rawUrl);
+            const cloudName = urlObj.searchParams.get('cloud_name');
+            const publicId = urlObj.searchParams.get('public_id');
+            if (cloudName && publicId) {
+                // Returns a pure, fast-loading .mp4 file
+                return `https://res.cloudinary.com/${cloudName}/video/upload/${publicId}.mp4`;
+            }
+        } catch(e) {
+            return rawUrl;
+        }
+    }
+    return rawUrl;
+}
+
 async function loadFromGoogleSheets() {
     try {
         const response = await fetch(sheetUrl);
@@ -16,12 +36,14 @@ async function loadFromGoogleSheets() {
         
         portfolio = rows.map(row => {
             const columns = row.split('\t');
-            let embedUrl = columns[2] ? columns[2].trim() : '';
+            let rawUrl = columns[2] ? columns[2].trim() : '';
+            let thumbnailUrl = columns[3] ? columns[3].trim() : ''; // Column D Thumbnail
             
             return {
                 title: columns[0] ? columns[0].trim() : '',
                 category: columns[1] ? columns[1].trim() : '',
-                embedUrl: embedUrl
+                embedUrl: formatVideoUrl(rawUrl), // Uses the auto-converter
+                thumbnailUrl: thumbnailUrl
             };
         }).filter(video => video.title !== '' && video.embedUrl !== '');
         
@@ -32,7 +54,7 @@ async function loadFromGoogleSheets() {
 }
 
 /* ==========================================
-   RENDER CARDS (Using working iframes)
+   RENDER CARDS (Native Video with Custom Thumbnail Poster)
 ========================================== */
 function createCards(categoryFilter = "All") {
     if (!grid) return;
@@ -44,14 +66,10 @@ function createCards(categoryFilter = "All") {
             grid.innerHTML += `
             <div class="portfolio-card">
                 <div class="video-container">
-                    <iframe 
-                        src="${video.embedUrl}" 
-                        title="${video.title}" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen
-                        loading="lazy">
-                    </iframe>
+                    <video controls preload="metadata" playsinline poster="${video.thumbnailUrl}">
+                        <source src="${video.embedUrl}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                     <div class="watermark">Parvez Edits</div>
                 </div>
                 <div class="card-content">
@@ -64,7 +82,7 @@ function createCards(categoryFilter = "All") {
 }
 
 /* ==========================================
-   FILTER
+   FILTER & ANIMATIONS
 ========================================== */
 const buttons = document.querySelectorAll(".filter-buttons button");
 
@@ -76,9 +94,6 @@ buttons.forEach(button => {
     });
 });
 
-/* ==========================================
-   SCROLL ANIMATION & NAVBAR SHRINK
-========================================== */
 const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -92,7 +107,7 @@ document.querySelectorAll("section").forEach(section => {
     observer.observe(section);
 });
 
-// Shrinking Header Logic
+// Navbar Shrink Logic
 const navbar = document.querySelector('.navbar'); 
 window.addEventListener('scroll', () => {
     if (window.scrollY > 50) {
