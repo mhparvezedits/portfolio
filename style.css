@@ -343,20 +343,25 @@ PORTFOLIO GRID & VIDEO PLAYER
     box-shadow:0 25px 70px rgba(37,99,235,.22);
 }
 
+/* --- FINAL VIDEO CONTAINER FIX (Zero Black Bars) --- */
 .video-container {
     position: relative;
     width: 100%;
-    /* Back to exact video dimensions to eliminate black bars */
     aspect-ratio: 9 / 16; 
     background: #000;
     overflow: hidden;
 }
-.video-container video {
+.video-container video,
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    /* Fills the 9:16 container perfectly from edge to edge */
     object-fit: cover; 
     display: block;
+    border: none;
+    transform: scale(1.01); /* Eliminates 1px borders */
 }
 
 /* Custom Play Button */
