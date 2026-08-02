@@ -81,7 +81,8 @@ function createCards(categoryFilter = "All") {
             <div class="portfolio-card">
                 <div class="video-container">
                     <!-- Notice: 'controls' is initially removed so it looks clean -->
-                    <video preload="metadata" playsinline poster="${video.thumbnailUrl}">
+                    <!-- Download disabled and right-click blocked below -->
+                    <video preload="metadata" playsinline controlsList="nodownload" oncontextmenu="return false;" poster="${video.thumbnailUrl}">
                         <source src="${video.embedUrl}" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
