@@ -339,8 +339,21 @@ PORTFOLIO GRID & VIDEO PLAYER
     transform:translateY(-12px);
     box-shadow:0 25px 70px rgba(37,99,235,.22);
 }
-
 .video-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 5; /* Keeps the card perfectly short on desktop */
+    background: #000;    /* Hides the edges so it looks seamless */
+    overflow: hidden;
+}
+
+.video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Forces the entire 9:16 video to stay fully in frame */
+    display: block;
+}
+/* .video-container {
     position: relative;
     width: 100%;
     aspect-ratio: 9 / 16; 
@@ -352,7 +365,7 @@ PORTFOLIO GRID & VIDEO PLAYER
     height: 100%;
     object-fit: cover;
     display: block;
-}
+} */
 
 /* Main site e Play Button style add kora hoyeche jeno venge na jay */
 .custom-play-btn {
