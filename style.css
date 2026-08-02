@@ -93,6 +93,7 @@ NAVBAR & SHRINKING LOGIC
     padding-bottom: 12px !important;
     background: rgba(15, 23, 42, 0.98); 
     justify-content: center;
+    gap: 0 !important; /* FIX: Removes the empty space between invisible logo and menu on mobile */
 }
 .logo{
     font-size:28px;
@@ -100,12 +101,14 @@ NAVBAR & SHRINKING LOGIC
     letter-spacing:1px;
     transition: all 0.3s ease-in-out;
     max-width: 250px; 
+    max-height: 100px; /* FIX: Added so it can collapse vertically */
     opacity: 1;
     overflow: hidden;
     white-space: nowrap;
 }
 .navbar.shrink .logo {
     max-width: 0;
+    max-height: 0; /* FIX: Collapses the invisible height perfectly */
     opacity: 0;
     margin: 0; 
     padding: 0;
@@ -373,7 +376,7 @@ PORTFOLIO GRID & VIDEO PLAYER
     transition: 0.3s;
 }
 .custom-play-btn:hover svg circle {
-    fill: rgba(37, 99, 235, 0.9); /* Lights up blue on hover */
+    fill: rgba(37, 99, 235, 0.9);
 }
 /* ---------------------------------------- */
 
