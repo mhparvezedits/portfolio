@@ -131,10 +131,11 @@ document.querySelectorAll("section").forEach(section => {
     observer.observe(section);
 });
 
-// Navbar Shrink Logic
+// Navbar Shrink Logic (Disabled on PC)
 const navbar = document.querySelector('.navbar'); 
 window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
+    // window.innerWidth < 1100 ensures it ONLY shrinks on mobile/tablets
+    if (window.scrollY > 50 && window.innerWidth < 1100) {
         navbar.classList.add('shrink');
     } else {
         navbar.classList.remove('shrink');
