@@ -7,7 +7,7 @@ const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKtX4pSnCjRVB
 let portfolio = [];
 const grid = document.querySelector(".portfolio-grid");
 
-// SMART CONVERTER: Turns Cloudinary Web Links into Direct .MP4 files
+// Auto-convert Cloudinary links to pure .mp4 files
 function formatVideoUrl(rawUrl) {
     if (!rawUrl) return '';
     
@@ -17,7 +17,6 @@ function formatVideoUrl(rawUrl) {
             const cloudName = urlObj.searchParams.get('cloud_name');
             const publicId = urlObj.searchParams.get('public_id');
             if (cloudName && publicId) {
-                // Returns a pure, fast-loading .mp4 file
                 return `https://res.cloudinary.com/${cloudName}/video/upload/${publicId}.mp4`;
             }
         } catch(e) {
@@ -37,12 +36,12 @@ async function loadFromGoogleSheets() {
         portfolio = rows.map(row => {
             const columns = row.split('\t');
             let rawUrl = columns[2] ? columns[2].trim() : '';
-            let thumbnailUrl = columns[3] ? columns[3].trim() : ''; // Column D Thumbnail
+            let thumbnailUrl = columns[3] ? columns[3].trim() : ''; 
             
             return {
                 title: columns[0] ? columns[0].trim() : '',
                 category: columns[1] ? columns[1].trim() : '',
-                embedUrl: formatVideoUrl(rawUrl), // Uses the auto-converter
+                embedUrl: formatVideoUrl(rawUrl), 
                 thumbnailUrl: thumbnailUrl
             };
         }).filter(video => video.title !== '' && video.embedUrl !== '');
@@ -54,7 +53,22 @@ async function loadFromGoogleSheets() {
 }
 
 /* ==========================================
-   RENDER CARDS (Native Video with Custom Thumbnail Poster)
+   PLAY VIDEO FUNCTION (Custom Button Logic)
+========================================== */
+window.playCustomVideo = function(button) {
+    const container = button.closest('.video-container');
+    const video = container.querySelector('video');
+    
+    // Hide the custom play button
+    button.style.display = 'none';
+    
+    // Show the native controls (volume, fullscreen) and play
+    video.setAttribute('controls', 'true');
+    video.play();
+};
+
+/* ==========================================
+   RENDER CARDS 
 ========================================== */
 function createCards(categoryFilter = "All") {
     if (!grid) return;
@@ -66,10 +80,20 @@ function createCards(categoryFilter = "All") {
             grid.innerHTML += `
             <div class="portfolio-card">
                 <div class="video-container">
-                    <video controls preload="metadata" playsinline poster="${video.thumbnailUrl}">
+                    <!-- Notice: 'controls' is initially removed so it looks clean -->
+                    <video preload="metadata" playsinline poster="${video.thumbnailUrl}">
                         <source src="${video.embedUrl}" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
+                    
+                    <!-- YOUR NEW CUSTOM PLAY BUTTON -->
+                    <div class="custom-play-btn" onclick="playCustomVideo(this)">
+                        <svg viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="45" fill="rgba(0,0,0,0.6)" />
+                            <polygon points="40,30 40,70 70,50" fill="#ffffff" />
+                        </svg>
+                    </div>
+
                     <div class="watermark">Parvez Edits</div>
                 </div>
                 <div class="card-content">
