@@ -321,12 +321,13 @@ PORTFOLIO GRID & VIDEO PLAYER
 }
 .portfolio-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); 
+    /* FIX: Changed to 5 columns per row */
+    grid-template-columns: repeat(5, 1fr); 
     gap: 20px; 
     align-items: start;
     width: 100%;
-    /* The Sweet Spot: Not too wide (too tall), not too narrow (squished) */
-    max-width: 1024px; 
+    /* Increased slightly so 5 cards have room to breathe */
+    max-width: 1200px; 
     margin: 0 auto;    
 }
 .portfolio-card{
@@ -391,18 +392,20 @@ PORTFOLIO GRID & VIDEO PLAYER
 }
 
 .card-content{
-    padding:24px;
+    /* Tighter padding to fit 5 cards nicely */
+    padding: 18px 12px;
 }
 .category{
     color:#60a5fa;
-    font-size:14px;
+    font-size:13px; /* Slightly smaller to match */
     font-weight:700;
     letter-spacing:1px;
     text-transform:uppercase;
 }
 .card-content h3{
-    margin:12px 0;
-    font-size:23px;
+    margin: 8px 0;
+    /* FIX: Reduced font size so titles stay on 1 line */
+    font-size: 16px; 
 }
 
 /* ==========================================
@@ -546,7 +549,8 @@ ANIMATIONS & RESPONSIVE
     .hero-buttons{ justify-content:center; }
     .image-box{ width:360px; height:360px; }
     .navbar{ width:94%; }
-    .portfolio-grid { grid-template-columns: repeat(2, 1fr); } 
+    /* Changed tablet view to show 3 columns instead of 2 to match the new 5 column desktop scale */
+    .portfolio-grid { grid-template-columns: repeat(3, 1fr); } 
 }
 
 @media(max-width:768px){
@@ -558,6 +562,12 @@ ANIMATIONS & RESPONSIVE
     .image-box{ width:300px; height:300px; }
     
     .portfolio-grid, .services-grid{ grid-template-columns:1fr; }
+    
+    /* FIX: By maxing the width here, the card shrinks cleanly and naturally reduces height! */
+    .portfolio-card { 
+        max-width: 360px; 
+        margin: 0 auto; 
+    }
     
     section { padding: 60px 5%; }
     footer { margin-top: 50px; }
