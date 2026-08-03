@@ -321,10 +321,13 @@ PORTFOLIO GRID & VIDEO PLAYER
 }
 .portfolio-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); 
+    /* FIX: Show 5 videos per row */
+    grid-template-columns: repeat(5, 1fr); 
     gap: 20px; 
     align-items: start;
-    width: 100%;
+    /* FIX: 80% width and centered */
+    width: 80%;
+    margin: 0 auto; 
 }
 .portfolio-card{
     width: 100%;
@@ -381,18 +384,24 @@ PORTFOLIO GRID & VIDEO PLAYER
 }
 
 .card-content{
-    padding:24px;
+    /* FIX: Reduced padding */
+    padding: 18px 12px;
 }
 .category{
     color:#60a5fa;
-    font-size:14px;
+    /* FIX: Smaller font size */
+    font-size:13px;
     font-weight:700;
     letter-spacing:1px;
     text-transform:uppercase;
 }
 .card-content h3{
-    margin:12px 0;
-    font-size:23px;
+    /* FIX: Title safety net to ensure 1 row */
+    margin: 8px 0;
+    font-size: 15px;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
 }
 
 /*=========================================
