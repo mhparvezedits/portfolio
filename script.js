@@ -50,8 +50,8 @@ async function loadFromGoogleSheets() {
             };
         }).filter(video => video.title !== '' && video.embedUrl !== '');
         
-        // NEW: Load the Featured tab by default when the site opens
-        createCards("Featured");
+        // NEW: Load the 'All' tab by default when the site opens
+        createCards("All");
     } catch (error) {
         console.error('Error fetching Google Sheet:', error);
     }
@@ -75,14 +75,14 @@ window.playCustomVideo = function(button) {
 /* ==========================================
    RENDER CARDS 
 ========================================== */
-function createCards(categoryFilter = "Featured") {
+function createCards(categoryFilter = "All") {
     if (!grid) return;
     grid.innerHTML = "";
 
     let filteredVideos = [];
 
-    // THE SMART LOGIC FOR 'FEATURED' TAB
-    if (categoryFilter.toLowerCase() === "featured") {
+    // THE SMART LOGIC FOR 'FEATURED' OR 'ALL' TAB
+    if (categoryFilter.toLowerCase() === "featured" || categoryFilter.toLowerCase() === "all") {
         filteredVideos = portfolio.filter(video => 
             video.featured === true && 
             video.category.toLowerCase() !== "documentary" // Blocks horizontal docs
@@ -136,7 +136,7 @@ buttons.forEach(button => {
         buttons.forEach(btn => btn.classList.remove("active"));
         button.classList.add("active");
         
-        // Pass the inner text of the button (e.g., "Real Estate" or "Featured")
+        // Pass the inner text of the button (e.g., "Real Estate" or "All")
         createCards(button.innerText.trim());
     });
 });
