@@ -330,14 +330,14 @@ PORTFOLIO GRID & VIDEO PLAYER
     margin: 0 auto; 
 }
 .portfolio-card{
-    width: 85%;
+    width: 100%;
     background:rgba(255,255,255,.04);
     border:1px solid rgba(255,255,255,.06);
     backdrop-filter:blur(20px);
     border-radius:24px;
     overflow:hidden;
     transition:.35s;
-    margin: auto;
+    
 }
 .portfolio-card:hover{
     transform:translateY(-12px);
