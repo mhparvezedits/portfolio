@@ -326,7 +326,7 @@ PORTFOLIO GRID & VIDEO PLAYER
     gap: 20px; 
     align-items: start;
     /* FIX: 80% width and centered */
-    width: 80%;
+    width: 100%;
     margin: 0 auto; 
 }
 .portfolio-card{
