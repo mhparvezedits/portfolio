@@ -398,7 +398,7 @@ PORTFOLIO GRID & VIDEO PLAYER
 .card-content h3{
     /* FIX: Title safety net to ensure 1 row */
     margin: 8px 0;
-    font-size: 15px;
+    font-size: 18px;
     white-space: nowrap; 
     overflow: hidden; 
     text-overflow: ellipsis; 
