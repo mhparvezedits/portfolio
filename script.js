@@ -38,15 +38,20 @@ async function loadFromGoogleSheets() {
             let rawUrl = columns[2] ? columns[2].trim() : '';
             let thumbnailUrl = columns[3] ? columns[3].trim() : ''; 
             
+            // NEW: Grab Column E (index 4) for the Featured True/False status
+            let isFeatured = columns[4] ? columns[4].trim().toLowerCase() : 'false';
+            
             return {
                 title: columns[0] ? columns[0].trim() : '',
                 category: columns[1] ? columns[1].trim() : '',
                 embedUrl: formatVideoUrl(rawUrl), 
-                thumbnailUrl: thumbnailUrl
+                thumbnailUrl: thumbnailUrl,
+                featured: isFeatured === 'true' // Converts to boolean
             };
         }).filter(video => video.title !== '' && video.embedUrl !== '');
         
-        createCards();
+        // NEW: Load the Featured tab by default when the site opens
+        createCards("Featured");
     } catch (error) {
         console.error('Error fetching Google Sheet:', error);
     }
@@ -70,40 +75,55 @@ window.playCustomVideo = function(button) {
 /* ==========================================
    RENDER CARDS 
 ========================================== */
-function createCards(categoryFilter = "All") {
+function createCards(categoryFilter = "Featured") {
     if (!grid) return;
     grid.innerHTML = "";
 
-    portfolio
-        .filter(video => categoryFilter === "All" || video.category === categoryFilter)
-        .forEach(video => {
-            grid.innerHTML += `
-            <div class="portfolio-card">
-                <div class="video-container">
-                    <!-- Notice: 'controls' is initially removed so it looks clean -->
-                    <!-- Download disabled and right-click blocked below -->
-                    <video preload="metadata" playsinline controlsList="nodownload" oncontextmenu="return false;" poster="${video.thumbnailUrl}">
-                        <source src="${video.embedUrl}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                    
-                    <!-- YOUR NEW CUSTOM PLAY BUTTON -->
-                    <div class="custom-play-btn" onclick="playCustomVideo(this)">
-                        <svg viewBox="0 0 100 100">
-                            <circle cx="50" cy="50" r="45" fill="rgba(0,0,0,0.6)" />
-                            <polygon points="40,30 40,70 70,50" fill="#ffffff" />
-                        </svg>
-                    </div>
+    let filteredVideos = [];
 
-                    <div class="watermark">Parvez Edits</div>
+    // THE SMART LOGIC FOR 'FEATURED' TAB
+    if (categoryFilter.toLowerCase() === "featured") {
+        filteredVideos = portfolio.filter(video => 
+            video.featured === true && 
+            video.category.toLowerCase() !== "documentary" // Blocks horizontal docs
+        ).slice(0, 10); // Limits perfectly to 10 videos max
+
+    } else {
+        // STANDARD CATEGORY FILTERING (Real Estate, SaaS, etc.)
+        filteredVideos = portfolio.filter(video => 
+            video.category.toLowerCase() === categoryFilter.toLowerCase()
+        );
+    }
+
+    // Render the selected videos
+    filteredVideos.forEach(video => {
+        grid.innerHTML += `
+        <div class="portfolio-card">
+            <div class="video-container">
+                <!-- Notice: 'controls' is initially removed so it looks clean -->
+                <!-- Download disabled and right-click blocked below -->
+                <video preload="metadata" playsinline controlsList="nodownload" oncontextmenu="return false;" poster="${video.thumbnailUrl}">
+                    <source src="${video.embedUrl}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                
+                <!-- YOUR NEW CUSTOM PLAY BUTTON -->
+                <div class="custom-play-btn" onclick="playCustomVideo(this)">
+                    <svg viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="45" fill="rgba(0,0,0,0.6)" />
+                        <polygon points="40,30 40,70 70,50" fill="#ffffff" />
+                    </svg>
                 </div>
-                <div class="card-content">
-                    <div class="category">${video.category}</div>
-                    <h3>${video.title}</h3>
-                </div>
+
+                <div class="watermark">Parvez Edits</div>
             </div>
-            `;
-        });
+            <div class="card-content">
+                <div class="category">${video.category}</div>
+                <h3>${video.title}</h3>
+            </div>
+        </div>
+        `;
+    });
 }
 
 /* ==========================================
@@ -115,7 +135,9 @@ buttons.forEach(button => {
     button.addEventListener("click", () => {
         buttons.forEach(btn => btn.classList.remove("active"));
         button.classList.add("active");
-        createCards(button.innerText);
+        
+        // Pass the inner text of the button (e.g., "Real Estate" or "Featured")
+        createCards(button.innerText.trim());
     });
 });
 
