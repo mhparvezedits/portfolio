@@ -171,3 +171,41 @@ window.addEventListener('scroll', () => {
 document.addEventListener('DOMContentLoaded', () => {
     loadFromGoogleSheets();
 });
+/* ==========================================
+   STATS COUNTER ANIMATION
+========================================== */
+const counters = document.querySelectorAll('.counter');
+let hasCounted = false;
+
+const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        // Trigger only when the stats bar comes into view
+        if (entry.isIntersecting && !hasCounted) {
+            hasCounted = true; // Ensures it only animates once
+            
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const duration = 2000; // It will take exactly 2 seconds to count up
+                const increment = target / (duration / 16); 
+
+                let current = 0;
+                const updateCounter = () => {
+                    current += increment;
+                    if (current < target) {
+                        counter.innerText = Math.ceil(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.innerText = target; // Lock in the final number
+                    }
+                };
+                updateCounter();
+            });
+        }
+    });
+}, { threshold: 0.5 }); // Triggers when 50% of the stat block is visible on screen
+
+// Attach the observer to the stats container
+const statsContainer = document.querySelector('.stats-container');
+if (statsContainer) {
+    counterObserver.observe(statsContainer);
+}
